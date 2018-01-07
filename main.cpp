@@ -3,18 +3,34 @@
 
 using namespace std;
 
-bool checkList(DoubleLinkedList *, char **, int);
+template <class T>
+bool checkList(DoubleLinkedList<T> *list, T *array, int size) {
+    auto *iterator = new ListIterator<T>(list);
+    int arrayPosition = 0;
+
+    while (iterator->hasNext()) {
+        if (array[arrayPosition] != nullptr) {
+            if (array[arrayPosition] != iterator->next()->getValue()) {
+                return false;
+            }
+            arrayPosition++;
+        } else {
+            return false;
+        }
+    }
+    return size == arrayPosition;
+}
 
 void testList() {
     int numberOfSuccessfulTests = 0;
-    auto *list = new DoubleLinkedList();
-    list->pushFront(("element1"));
-    list->pushBack(("element2"));
-    list->pushFront("element3");
-    list->pushFront("element4");
-    list->pushFront("element5");
-    list->pushBack("element6");
-    list->pushBack("element7");
+    auto *list = new DoubleLinkedList<char*>();
+    list->pushFront(const_cast<char *>("element1"));
+    list->pushBack(const_cast<char *>("element2"));
+    list->pushFront(const_cast<char *>("element3"));
+    list->pushFront(const_cast<char *>("element4"));
+    list->pushFront(const_cast<char *>("element5"));
+    list->pushBack(const_cast<char *>("element6"));
+    list->pushBack(const_cast<char *>("element7"));
 
     char* elements[] = {const_cast<char *>("element5"), const_cast<char *>("element4"), const_cast<char *>("element3"),
                         const_cast<char *>("element1"), const_cast<char *>("element2"), const_cast<char *>("element6"),
@@ -37,20 +53,20 @@ void testList() {
     //Test 8
     numberOfSuccessfulTests += (list->popFront() == "element1");
 
-    list->pushFront(("element1"));
-    list->pushBack(("element2"));
-    list->pushFront(("element3"));
-    list->pushFront(("element4"));
-    list->pushFront(("element5"));
-    list->pushBack(("element6"));
-    list->pushBack(("element7"));
+    list->pushFront(const_cast<char *>("element1"));
+    list->pushBack(const_cast<char *>("element2"));
+    list->pushFront(const_cast<char *>("element3"));
+    list->pushFront(const_cast<char *>("element4"));
+    list->pushFront(const_cast<char *>("element5"));
+    list->pushBack(const_cast<char *>("element6"));
+    list->pushBack(const_cast<char *>("element7"));
 
-    auto *iterator = new ListIterator(list);
+    auto *iterator = new ListIterator<char *>(list);
 
     //Test 9
     numberOfSuccessfulTests += iterator->hasNext();
     //Test 10
-    numberOfSuccessfulTests += (iterator->next()->getValue() == "element5");
+    numberOfSuccessfulTests += (iterator->next()->getValue() == (char *) "element5");
     iterator->remove();
     //Test 11
     numberOfSuccessfulTests += (iterator->next()->getValue() == "element4");
@@ -77,23 +93,6 @@ void testList() {
     //Test 19
     numberOfSuccessfulTests += checkList(list, elements2, 3);
     cout << numberOfSuccessfulTests << "/19 tests successful"<< endl;
-}
-
-bool checkList(DoubleLinkedList *list, char **array, int size) {
-    auto *iterator = new ListIterator(list);
-    int arrayPosition = 0;
-
-    while (iterator->hasNext()) {
-        if (array[arrayPosition] != nullptr) {
-            if (array[arrayPosition] != iterator->next()->getValue()) {
-                return false;
-            }
-            arrayPosition++;
-        } else {
-            return false;
-        }
-    }
-    return size == arrayPosition;
 }
 
 int main() {

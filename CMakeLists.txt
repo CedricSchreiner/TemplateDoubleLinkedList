@@ -3,4 +3,4 @@ project(TemplateDoubleLinkedList)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(DoubleLinkedList main.cpp ListElement.cpp ListElement.hpp DoubleLinkedList.cpp DoubleLinkedList.hpp ListIterator.cpp ListIterator.hpp)
+add_executable(TemplateDoubleLinkedList main.cpp DoubleLinkedList.hpp ListElement.hpp ListIterator.hpp)

@@ -107,6 +107,11 @@ void dialog() {
 }
 
 int main() {
+    auto *list = new DoubleLinkedList<int>();
+
+    list->pushFront(10);
+    list->pushBack(20);
+    cout << list->toString() << endl;
     testList();
     dialog();
 

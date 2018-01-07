@@ -19,6 +19,8 @@ public:
     T popBack();
     T popFront();
     void removeElement(int position);
+    const char* toString();
+    const char* printBackwards();
 
     //operators
     bool operator==(const DoubleLinkedList<T> &rhs) const;
@@ -163,6 +165,30 @@ void DoubleLinkedList<T>::removeElement(int position) {
             this->numberOfElements--;
         }
     }
+}
+
+template <typename T>
+const char* DoubleLinkedList<T>::toString() {
+    ListElement<T> *element = this->header;
+    auto *string = new std::string;
+    while(element != nullptr) {
+        *string += element->getValue();
+        *string += '\n';
+        element = element->getNext();
+    }
+    return string->c_str();
+}
+
+template <typename T>
+const char* DoubleLinkedList<T>::printBackwards() {
+    ListElement<T> *element = this->tail;
+    auto *string = new std::string;
+    while(element != nullptr) {
+        *string += element->getValue();
+        *string += '\n';
+        element = element->getPrevious();
+    }
+    return string->c_str();
 }
 
 template <typename T>

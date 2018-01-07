@@ -95,8 +95,20 @@ void testList() {
     cout << numberOfSuccessfulTests << "/19 tests successful"<< endl;
 }
 
+void dialog() {
+    cout << "1: neue Liste erstellen" << endl;
+    cout << "2: Typ der Liste ausgeben" << endl;
+    cout << "3: Element vorne anhaengen" << endl;
+    cout << "4: Element hinten anhaengen" << endl;
+    cout << "5: Element vorne erhalten" << endl;
+    cout << "6: Element hinten erhalten" << endl;
+    cout << "7: Liste von vorne nach hinten ausgeben" << endl;
+    cout << "8: Liste von hinten nach vorne ausgeben" << endl;
+}
+
 int main() {
     testList();
+    dialog();
 
     return 0;
 }

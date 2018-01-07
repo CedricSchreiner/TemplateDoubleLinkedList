@@ -9,7 +9,7 @@ bool checkList(DoubleLinkedList<T> *list, T *array, int size) {
     int arrayPosition = 0;
 
     while (iterator->hasNext()) {
-        if (array[arrayPosition] != nullptr) {
+        if (arrayPosition < size) {
             if (array[arrayPosition] != iterator->next()->getValue()) {
                 return false;
             }
@@ -21,99 +21,150 @@ bool checkList(DoubleLinkedList<T> *list, T *array, int size) {
     return size == arrayPosition;
 }
 
+void checkIfTestFailed(int *currentTest, int *failedTests, int numberOfSuccessfulTests) {
+    (*currentTest)++;
+    if (*currentTest != numberOfSuccessfulTests + *failedTests) {
+        (*failedTests)++;
+        cout << *currentTest << " failed" << endl;
+    }
+}
+
+template <typename T>
 void testList() {
     int numberOfSuccessfulTests = 0;
-    auto *list = new DoubleLinkedList<char*>();
-    list->pushFront(const_cast<char *>("element1"));
-    list->pushBack(const_cast<char *>("element2"));
-    list->pushFront(const_cast<char *>("element3"));
-    list->pushFront(const_cast<char *>("element4"));
-    list->pushFront(const_cast<char *>("element5"));
-    list->pushBack(const_cast<char *>("element6"));
-    list->pushBack(const_cast<char *>("element7"));
+    int failedTests = 0;
+    int currentTest = 0;
 
-    char* elements[] = {const_cast<char *>("element5"), const_cast<char *>("element4"), const_cast<char *>("element3"),
-                        const_cast<char *>("element1"), const_cast<char *>("element2"), const_cast<char *>("element6"),
-                        const_cast<char *>("element7")};
+    //elements that are used for the test----------------------------------------------
+    T element1 = "1";
+    T element2 = "2";
+    T element3 = "3";
+    T element4 = "4";
+    T element5 = "5";
+    T element6 = "6";
+    T element7 = "7";
+    //----------------------------------------------------------------------------------
+
+    //start test for the list-----------------------------------------------------------
+    auto *list = new DoubleLinkedList<T>();
+    list->pushFront(element1);
+    list->pushBack(element2);
+    list->pushFront(element3);
+    list->pushFront(element4);
+    list->pushFront(element5);
+    list->pushBack(element6);
+    list->pushBack(element7);
+
+    T elements[] = {element5, element4, element3, element1, element2, element6, element7};
 
     //Test 1
     numberOfSuccessfulTests += checkList(list, elements, 7);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+
     //Test 2
-    numberOfSuccessfulTests += (list->popFront() == "element5");
+    numberOfSuccessfulTests += (list->popFront() == element5);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+
     //Test 3
-    numberOfSuccessfulTests += (list->popBack() == "element7");
+    numberOfSuccessfulTests += (list->popBack() == element7);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
     //Test 4
-    numberOfSuccessfulTests += (list->popFront() == "element4");
+    numberOfSuccessfulTests += (list->popFront() == element4);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+
     //Test 5
-    numberOfSuccessfulTests += (list->popFront() == "element3");
+    numberOfSuccessfulTests += (list->popFront() == element3);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+
     //Test 6
-    numberOfSuccessfulTests += (list->popBack() == "element6");
+    numberOfSuccessfulTests += (list->popBack() == element6);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+
     //Test 7
-    numberOfSuccessfulTests += (list->popBack() == "element2");
+    numberOfSuccessfulTests += (list->popBack() == element2);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+
     //Test 8
-    numberOfSuccessfulTests += (list->popFront() == "element1");
+    numberOfSuccessfulTests += (list->popFront() == element1);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+    //-------------------------------------------------------------------------------------
 
-    list->pushFront(const_cast<char *>("element1"));
-    list->pushBack(const_cast<char *>("element2"));
-    list->pushFront(const_cast<char *>("element3"));
-    list->pushFront(const_cast<char *>("element4"));
-    list->pushFront(const_cast<char *>("element5"));
-    list->pushBack(const_cast<char *>("element6"));
-    list->pushBack(const_cast<char *>("element7"));
 
-    auto *iterator = new ListIterator<char *>(list);
+    //start test the iterator for list-----------------------------------------------------
+    list->pushFront(element1);
+    list->pushBack(element2);
+    list->pushFront(element3);
+    list->pushFront(element4);
+    list->pushFront(element5);
+    list->pushBack(element6);
+    list->pushBack(element7);
+
+    auto *iterator = new ListIterator<T>(list);
 
     //Test 9
     numberOfSuccessfulTests += iterator->hasNext();
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+
     //Test 10
-    numberOfSuccessfulTests += (iterator->next()->getValue() == (char *) "element5");
+    numberOfSuccessfulTests += (iterator->next()->getValue() == element5);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
     iterator->remove();
+
     //Test 11
-    numberOfSuccessfulTests += (iterator->next()->getValue() == "element4");
+    numberOfSuccessfulTests += (iterator->next()->getValue() == element4);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+
     //Test 12
-    numberOfSuccessfulTests += (iterator->next()->getValue() == "element3");
+    numberOfSuccessfulTests += (iterator->next()->getValue() == element3);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
     iterator->remove();
+
     //Test 13
-    numberOfSuccessfulTests += (iterator->next()->getValue() == "element1");
+    numberOfSuccessfulTests += (iterator->next()->getValue() == element1);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+
     //Test 14
     numberOfSuccessfulTests += iterator->hasNext();
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+
     //Test 15
-    numberOfSuccessfulTests += (iterator->next()->getValue() == "element2");
+    numberOfSuccessfulTests += (iterator->next()->getValue() == element2);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
     iterator->remove();
+
     //Test 16
-    numberOfSuccessfulTests += (iterator->next()->getValue() == "element6");
+    numberOfSuccessfulTests += (iterator->next()->getValue() == element6);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+
     //Test 17
-    numberOfSuccessfulTests += (iterator->next()->getValue() == "element7");
+    numberOfSuccessfulTests += (iterator->next()->getValue() == element7);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
     iterator->remove();
+
     //Test 18
     numberOfSuccessfulTests += !iterator->hasNext();
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
 
-    char* elements2[] = {const_cast<char *>("element4"), const_cast<char *>("element1"), const_cast<char *>("element6")};
+    T elements2[] = {element4, element1, element6};
 
     //Test 19
     numberOfSuccessfulTests += checkList(list, elements2, 3);
-    cout << numberOfSuccessfulTests << "/19 tests successful"<< endl;
-}
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+    //-------------------------------------------------------------------------------------
 
-void dialog() {
-    cout << "1: neue Liste erstellen" << endl;
-    cout << "2: Typ der Liste ausgeben" << endl;
-    cout << "3: Element vorne anhaengen" << endl;
-    cout << "4: Element hinten anhaengen" << endl;
-    cout << "5: Element vorne erhalten" << endl;
-    cout << "6: Element hinten erhalten" << endl;
-    cout << "7: Liste von vorne nach hinten ausgeben" << endl;
-    cout << "8: Liste von hinten nach vorne ausgeben" << endl;
+    //test the Copy constructor------------------------------------------------------------
+    DoubleLinkedList<T> copiedList(*list);
+
+    //Test 20
+    numberOfSuccessfulTests += checkList(&copiedList, elements2, 3);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+    //-------------------------------------------------------------------------------------
+
+    cout << numberOfSuccessfulTests << "/20 tests successful"<< endl;
 }
 
 int main() {
-    auto *list = new DoubleLinkedList<int>();
-
-    list->pushFront(10);
-    list->pushBack(20);
-    cout << list->toString() << endl;
-    testList();
-    dialog();
+    testList<char *>();
 
     return 0;
 }

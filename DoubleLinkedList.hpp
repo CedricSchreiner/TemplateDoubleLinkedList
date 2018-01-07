@@ -65,7 +65,7 @@ DoubleLinkedList<T>::DoubleLinkedList(const DoubleLinkedList &rhs) :
         numberOfElements {0} {
     ListElement<T> *rhsElement = rhs.header;
     while(rhsElement != nullptr) {
-        this->pushFront(rhsElement->getValue());
+        this->pushBack(rhsElement->getValue());
         rhsElement = rhsElement->getNext();
     }
 }
@@ -112,7 +112,7 @@ void DoubleLinkedList<T>::pushFront(const T value) {
 template <typename T>
 T DoubleLinkedList<T>::popBack() {
     if (this->numberOfElements == 0) {
-        return nullptr;
+
     } else if (this->numberOfElements == 1) {
         this->numberOfElements--;
         T value = this->tail->getValue();

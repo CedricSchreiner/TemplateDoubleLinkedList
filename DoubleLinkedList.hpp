@@ -11,6 +11,7 @@
 template <typename T>
 class DoubleLinkedList {
 public:
+    ~DoubleLinkedList() = default;
     DoubleLinkedList();
     explicit DoubleLinkedList(T *array);
     DoubleLinkedList(const DoubleLinkedList<T> &rhs);
@@ -208,7 +209,7 @@ bool DoubleLinkedList<T>::operator==(const DoubleLinkedList<T> &rhs) const {
         rhsElement = rhsElement->getNext();
         thisElement = thisElement->getNext();
     }
-    return true;
+    return rhsElement == nullptr;
 }
 
 template <typename T>

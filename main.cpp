@@ -36,13 +36,13 @@ void testList() {
     int currentTest = 0;
 
     //elements that are used for the test----------------------------------------------
-    T element1 = "1";
-    T element2 = "2";
-    T element3 = "3";
-    T element4 = "4";
-    T element5 = "5";
-    T element6 = "6";
-    T element7 = "7";
+    T element1 = 1;
+    T element2 = 2;
+    T element3 = 3;
+    T element4 = 4;
+    T element5 = 5;
+    T element6 = 6;
+    T element7 = 7;
     //----------------------------------------------------------------------------------
 
     //start test for the list-----------------------------------------------------------
@@ -152,19 +152,33 @@ void testList() {
     checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
     //-------------------------------------------------------------------------------------
 
-    //test the Copy constructor------------------------------------------------------------
+    //test the Copy constructor and operators----------------------------------------------
     DoubleLinkedList<T> copiedList(*list);
 
     //Test 20
     numberOfSuccessfulTests += checkList(&copiedList, elements2, 3);
     checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+
+    //Test 21
+    numberOfSuccessfulTests += copiedList.operator==(*list);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+
+    //Test 22
+    copiedList.pushBack(element1);
+    numberOfSuccessfulTests += copiedList.operator!=(*list);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+
+    //Test 23
+    T elements3[] = {element4, element1, element6, element1, element4, element1, element6};
+    copiedList += *list;
+    numberOfSuccessfulTests += checkList(&copiedList, elements3, 7);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
     //-------------------------------------------------------------------------------------
 
-    cout << numberOfSuccessfulTests << "/20 tests successful"<< endl;
+    cout << numberOfSuccessfulTests << "/23 tests successful"<< endl;
 }
 
 int main() {
-    testList<char *>();
-
+    testList<double>();
     return 0;
 }

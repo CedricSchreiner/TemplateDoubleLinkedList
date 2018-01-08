@@ -13,7 +13,7 @@ class DoubleLinkedList {
 public:
     ~DoubleLinkedList() = default;
     DoubleLinkedList();
-    explicit DoubleLinkedList(T *array);
+    explicit DoubleLinkedList(T *array, int size);
     DoubleLinkedList(const DoubleLinkedList<T> &rhs);
     void pushBack(T value);
     void pushFront(T value);
@@ -47,14 +47,14 @@ DoubleLinkedList<T>::DoubleLinkedList() {
 }
 
 template <typename T>
-DoubleLinkedList<T>::DoubleLinkedList(T *array) {
+DoubleLinkedList<T>::DoubleLinkedList(T *array, int size) {
     this->header = nullptr;
     this->tail = nullptr;
     this->numberOfElements = 0;
 
     int i = 0;
-    while (array[i] != nullptr) {
-        this->pushFront(array[i]);
+    while (i < size) {
+        this->pushBack(array[i]);
         i++;
     }
 }

@@ -36,13 +36,13 @@ void testList() {
     int currentTest = 0;
 
     //elements that are used for the test----------------------------------------------
-    T element1 = 1;
-    T element2 = 2;
-    T element3 = 3;
-    T element4 = 4;
-    T element5 = 5;
-    T element6 = 6;
-    T element7 = 7;
+    T element1 = "1";
+    T element2 = "2";
+    T element3 = "3";
+    T element4 = "4";
+    T element5 = "5";
+    T element6 = "6";
+    T element7 = "7";
     //----------------------------------------------------------------------------------
 
     //start test for the list-----------------------------------------------------------
@@ -173,12 +173,17 @@ void testList() {
     copiedList += *list;
     numberOfSuccessfulTests += checkList(&copiedList, elements3, 7);
     checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
+
+    //Test 24
+    DoubleLinkedList<T> listFromList(elements3, 7);
+    numberOfSuccessfulTests += checkList(&listFromList, elements3, 7);
+    checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
     //-------------------------------------------------------------------------------------
 
-    cout << numberOfSuccessfulTests << "/23 tests successful"<< endl;
+    cout << numberOfSuccessfulTests << "/24 tests successful"<< endl;
 }
 
 int main() {
-    testList<double>();
+    testList<char *>();
     return 0;
 }

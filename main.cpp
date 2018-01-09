@@ -1,11 +1,11 @@
 #include <iostream>
-#include "ListIterator.hpp"
+#include "Iterator.hpp"
 
 using namespace std;
 
 template <class T>
-bool checkList(DoubleLinkedList<T> *list, T *array, int size) {
-    auto *iterator = new ListIterator<T>(list);
+bool checkList(DQueue<T> *list, T *array, int size) {
+    auto *iterator = new Iterator<T>(list);
     int arrayPosition = 0;
 
     while (iterator->hasNext()) {
@@ -46,7 +46,7 @@ void testList() {
     //----------------------------------------------------------------------------------
 
     //start test for the list-----------------------------------------------------------
-    auto *list = new DoubleLinkedList<T>();
+    auto *list = new DQueue<T>();
     list->pushFront(element1);
     list->pushBack(element2);
     list->pushFront(element3);
@@ -99,7 +99,7 @@ void testList() {
     list->pushBack(element6);
     list->pushBack(element7);
 
-    auto *iterator = new ListIterator<T>(list);
+    auto *iterator = new Iterator<T>(list);
 
     //Test 9
     numberOfSuccessfulTests += iterator->hasNext();
@@ -152,8 +152,8 @@ void testList() {
     checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
     //-------------------------------------------------------------------------------------
 
-    //test the Copy constructor and operators----------------------------------------------
-    DoubleLinkedList<T> copiedList(*list);
+    //test the Copy constructor,constructor and operators----------------------------------------------
+    DQueue<T> copiedList(*list);
 
     //Test 20
     numberOfSuccessfulTests += checkList(&copiedList, elements2, 3);
@@ -175,10 +175,13 @@ void testList() {
     checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
 
     //Test 24
-    DoubleLinkedList<T> listFromList(elements3, 7);
+    DQueue<T> listFromList(elements3, 7);
     numberOfSuccessfulTests += checkList(&listFromList, elements3, 7);
     checkIfTestFailed(&currentTest, &failedTests, numberOfSuccessfulTests);
     //-------------------------------------------------------------------------------------
+
+    delete list;
+    delete iterator;
 
     cout << numberOfSuccessfulTests << "/24 tests successful"<< endl;
 }

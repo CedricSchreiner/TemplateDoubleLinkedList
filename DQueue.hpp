@@ -2,19 +2,19 @@
 // Created by Cedric on 06.01.2018.
 //
 
-#include "ListElement.hpp"
+#include "QueueElement.hpp"
 
 #ifndef DOUBLELINKEDLIST_DOUBLELINKEDLIST_HPP
 #define DOUBLELINKEDLIST_DOUBLELINKEDLIST_HPP
 
 #endif
 template <typename T>
-class DoubleLinkedList {
+class DQueue {
 public:
-    ~DoubleLinkedList() = default;
-    DoubleLinkedList();
-    explicit DoubleLinkedList(T *array, int size);
-    DoubleLinkedList(const DoubleLinkedList<T> &rhs);
+    ~DQueue() = default;
+    DQueue();
+    explicit DQueue(T *array, int size);
+    DQueue(const DQueue<T> &rhs);
     void pushBack(T value);
     void pushFront(T value);
     T popBack();
@@ -24,30 +24,30 @@ public:
     const char* printBackwards();
 
     //operators
-    bool operator==(const DoubleLinkedList<T> &rhs) const;
-    bool operator!=(const DoubleLinkedList<T> &rhs) const;
-    DoubleLinkedList<T>& operator=(const DoubleLinkedList<T>& right);
-    DoubleLinkedList<T> operator+(const DoubleLinkedList<T>& right);
-    DoubleLinkedList<T>& operator+=(const DoubleLinkedList<T>& right);
-    ListElement<T>* operator[](int i);
+    bool operator==(const DQueue<T> &rhs) const;
+    bool operator!=(const DQueue<T> &rhs) const;
+    DQueue<T>& operator=(const DQueue<T>& right);
+    DQueue<T> operator+(const DQueue<T>& right);
+    DQueue<T>& operator+=(const DQueue<T>& right);
+    QueueElement<T>* operator[](int i);
 
 protected:
 private:
-    ListElement<T> *header;
-    ListElement<T> *tail;
+    QueueElement<T> *header;
+    QueueElement<T> *tail;
     int numberOfElements;
 };
 
 
 template <typename T>
-DoubleLinkedList<T>::DoubleLinkedList() {
+DQueue<T>::DQueue() {
     this->header = nullptr;
     this->tail = nullptr;
     this->numberOfElements = 0;
 }
 
 template <typename T>
-DoubleLinkedList<T>::DoubleLinkedList(T *array, int size) {
+DQueue<T>::DQueue(T *array, int size) {
     this->header = nullptr;
     this->tail = nullptr;
     this->numberOfElements = 0;
@@ -60,11 +60,11 @@ DoubleLinkedList<T>::DoubleLinkedList(T *array, int size) {
 }
 
 template <typename T>
-DoubleLinkedList<T>::DoubleLinkedList(const DoubleLinkedList &rhs) :
-        header {new ListElement<T>(rhs.header->getValue())},
-        tail {new ListElement<T>(rhs.tail->getValue())},
+DQueue<T>::DQueue(const DQueue &rhs) :
+        header {new QueueElement<T>(rhs.header->getValue())},
+        tail {new QueueElement<T>(rhs.tail->getValue())},
         numberOfElements {0} {
-    ListElement<T> *rhsElement = rhs.header;
+    QueueElement<T> *rhsElement = rhs.header;
     while(rhsElement != nullptr) {
         this->pushBack(rhsElement->getValue());
         rhsElement = rhsElement->getNext();
@@ -72,18 +72,18 @@ DoubleLinkedList<T>::DoubleLinkedList(const DoubleLinkedList &rhs) :
 }
 
 template <typename T>
-void DoubleLinkedList<T>::pushBack(const T value) {
+void DQueue<T>::pushBack(const T value) {
     //insert first element
     if (this->numberOfElements == 0) {
-        this->header = new ListElement<T>(value);
-        this->tail = new ListElement<T>(value);
+        this->header = new QueueElement<T>(value);
+        this->tail = new QueueElement<T>(value);
     } else if (this->numberOfElements == 1) {
-        auto *element = new ListElement<T>(value);
+        auto *element = new QueueElement<T>(value);
         this->tail = element;
         this->tail->setPrvious(this->header);
         this->header->setNext(element);
     } else {
-        auto * element = new ListElement<T>(value);
+        auto * element = new QueueElement<T>(value);
         element->setPrvious(this->tail);
         this->tail->setNext(element);
         this->tail = element;
@@ -92,17 +92,17 @@ void DoubleLinkedList<T>::pushBack(const T value) {
 }
 
 template <typename T>
-void DoubleLinkedList<T>::pushFront(const T value) {
+void DQueue<T>::pushFront(const T value) {
     if (this->numberOfElements == 0) {
-        this->header = new ListElement<T>(value);
-        this->tail = new ListElement<T>(value);
+        this->header = new QueueElement<T>(value);
+        this->tail = new QueueElement<T>(value);
     } else if (this->numberOfElements == 1) {
-        auto *element = new ListElement<T>(value);
+        auto *element = new QueueElement<T>(value);
         this->header = element;
         this->header->setNext(this->tail);
         this->tail->setPrvious(element);
     } else {
-        auto * element = new ListElement<T>(value);
+        auto * element = new QueueElement<T>(value);
         element->setNext(this->header);
         this->header->setPrvious(element);
         this->header = element;
@@ -111,7 +111,7 @@ void DoubleLinkedList<T>::pushFront(const T value) {
 }
 
 template <typename T>
-T DoubleLinkedList<T>::popBack() {
+T DQueue<T>::popBack() {
     if (this->numberOfElements == 0) {
 
     } else if (this->numberOfElements == 1) {
@@ -131,7 +131,7 @@ T DoubleLinkedList<T>::popBack() {
 }
 
 template <typename T>
-T DoubleLinkedList<T>::popFront() {
+T DQueue<T>::popFront() {
     if (this->numberOfElements == 0) {
 
     } else if (this->numberOfElements == 1) {
@@ -151,11 +151,11 @@ T DoubleLinkedList<T>::popFront() {
 }
 
 template <typename T>
-void DoubleLinkedList<T>::removeElement(int position) {
+void DQueue<T>::removeElement(int position) {
     if (position == 1) {
         this->popFront();
     } else {
-        ListElement<T> *element = this->operator[](position - 1);
+        QueueElement<T> *element = this->operator[](position - 1);
         if (element == this->tail) {
             this->popBack();
         } else {
@@ -169,8 +169,8 @@ void DoubleLinkedList<T>::removeElement(int position) {
 }
 
 template <typename T>
-const char* DoubleLinkedList<T>::toString() {
-    ListElement<T> *element = this->header;
+const char* DQueue<T>::toString() {
+    QueueElement<T> *element = this->header;
     auto *string = new std::string;
     while(element != nullptr) {
         *string += element->getValue();
@@ -181,8 +181,8 @@ const char* DoubleLinkedList<T>::toString() {
 }
 
 template <typename T>
-const char* DoubleLinkedList<T>::printBackwards() {
-    ListElement<T> *element = this->tail;
+const char* DQueue<T>::printBackwards() {
+    QueueElement<T> *element = this->tail;
     auto *string = new std::string;
     while(element != nullptr) {
         *string += element->getValue();
@@ -193,9 +193,9 @@ const char* DoubleLinkedList<T>::printBackwards() {
 }
 
 template <typename T>
-bool DoubleLinkedList<T>::operator==(const DoubleLinkedList<T> &rhs) const {
-    ListElement<T> *thisElement = this->header;
-    ListElement<T> *rhsElement = rhs.header;
+bool DQueue<T>::operator==(const DQueue<T> &rhs) const {
+    QueueElement<T> *thisElement = this->header;
+    QueueElement<T> *rhsElement = rhs.header;
 
     if (thisElement == nullptr && rhsElement != nullptr) {
         return false;
@@ -213,16 +213,16 @@ bool DoubleLinkedList<T>::operator==(const DoubleLinkedList<T> &rhs) const {
 }
 
 template <typename T>
-bool DoubleLinkedList<T>::operator!=(const DoubleLinkedList<T> &rhs) const {
+bool DQueue<T>::operator!=(const DQueue<T> &rhs) const {
     return !(rhs == *this);
 }
 
 template <typename T>
-DoubleLinkedList<T>& DoubleLinkedList<T>::operator=(const DoubleLinkedList<T> &right) {
+DQueue<T>& DQueue<T>::operator=(const DQueue<T> &right) {
     this->header = nullptr;
     this->tail = nullptr;
     this->numberOfElements = 0;
-    ListElement<T> *rhsElement = right.header;
+    QueueElement<T> *rhsElement = right.header;
     while(rhsElement != nullptr) {
         this->pushFront(rhsElement->getValue());
         rhsElement = rhsElement->getNext();
@@ -231,14 +231,14 @@ DoubleLinkedList<T>& DoubleLinkedList<T>::operator=(const DoubleLinkedList<T> &r
 }
 
 template <typename T>
-DoubleLinkedList<T> DoubleLinkedList<T>::operator+(const DoubleLinkedList<T> &right) {
+DQueue<T> DQueue<T>::operator+(const DQueue<T> &right) {
     *this += right;
     return *this;
 }
 
 template <typename T>
-DoubleLinkedList<T>& DoubleLinkedList<T>::operator+=(const DoubleLinkedList<T> &right) {
-    ListElement<T> *element = right.header;
+DQueue<T>& DQueue<T>::operator+=(const DQueue<T> &right) {
+    QueueElement<T> *element = right.header;
     while(element != nullptr) {
         this->pushBack(element->getValue());
         element = element->getNext();
@@ -248,9 +248,9 @@ DoubleLinkedList<T>& DoubleLinkedList<T>::operator+=(const DoubleLinkedList<T> &
 }
 
 template <typename T>
-ListElement<T>* DoubleLinkedList<T>::operator[](const int i) {
+QueueElement<T>* DQueue<T>::operator[](const int i) {
     int index = 0;
-    ListElement<T> *element = header;
+    QueueElement<T> *element = header;
     if (i >= 0 && i < numberOfElements) {
         while(index < i) {
             element = element->getNext();

@@ -7,40 +7,40 @@
 
 #endif
 
-#include "DoubleLinkedList.hpp"
+#include "DQueue.hpp"
 
 template <typename T>
-class ListIterator {
+class Iterator {
 public:
-    explicit ListIterator(DoubleLinkedList<T> *list);
+    explicit Iterator(DQueue<T> *list);
     bool hasNext();
-    ListElement<T>* next();
+    QueueElement<T>* next();
     void remove();
 protected:
 private:
-    DoubleLinkedList<T> *list;
+    DQueue<T> *list;
     int position;
 };
 
 template <typename T>
-ListIterator<T>::ListIterator(DoubleLinkedList<T> *list) {
+Iterator<T>::Iterator(DQueue<T> *list) {
     this->list = list;
     this->position = 0;
 }
 
 template <typename T>
-bool ListIterator<T>::hasNext() {
+bool Iterator<T>::hasNext() {
     bool tmp = this->list->operator[](position) != nullptr;
     return tmp;
 }
 
 template <typename T>
-ListElement<T>* ListIterator<T>::next() {
-    ListElement<T> *element = this->list->operator[](position++);
+QueueElement<T>* Iterator<T>::next() {
+    QueueElement<T> *element = this->list->operator[](position++);
     return element;
 }
 
 template <typename T>
-void ListIterator<T>::remove() {
+void Iterator<T>::remove() {
     this->list->removeElement(position--);
 }
